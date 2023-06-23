@@ -5,6 +5,10 @@ class MusicLibrary {
     genres = Genre;
     playlists = Playlist;
 
+    getTrackById(id) {
+        return this.getTracks().filter(track => track.id === parseInt(id))[0];
+    }
+
     getTracks() {
         return this.tracks.library;
     }
@@ -100,6 +104,10 @@ class MusicLibrary {
 
 class MusicPlayer {
     library;
+    trackList;
+    playing;
+    audio = new Audio();
+    audioContext = new AudioContext();
 
     constructor(musicLibrary) {
         if (musicLibrary) {
@@ -107,6 +115,65 @@ class MusicPlayer {
         } else {
             this.library = new MusicLibrary();
         }
+    }
+
+    initialise() {
+        this.trackList = this.library.getTracks();
+
+        const audioTrack = this.audioContext.createMediaElementSource(this.audio);
+        const initialTrack = this.trackList[0];
+
+        audioTrack.connect(this.audioContext.destination);
+
+        this.playing = initialTrack;
+        this.audio.src = initialTrack.file;
+        this.audio.load();
+    }
+
+    getFormattedTimeString(time) {
+        const minutes = Math.floor(time / 60);
+        const seconds = Math.floor(time % 60);
+
+        return `${minutes}:${seconds < 10 ? '0' + seconds : seconds}`;
+    }
+
+    getNextTrack() {
+        const currentTrackIndex = this.trackList.findIndex(track => track === this.playing);
+
+        if (currentTrackIndex === this.trackList.length - 1) {
+            return this.trackList[0];
+        }
+
+        return this.trackList[currentTrackIndex + 1];
+    }
+
+    getPrevTrack() {
+        const currentTrackIndex = this.trackList.findIndex(track => track === this.playing);
+
+        if (currentTrackIndex === 0) {
+            return this.trackList[this.trackList.length - 1];
+        }
+        
+        return this.trackList[currentTrackIndex - 1];
+    }
+
+    playTrackById(id) {
+        const track = this.library.getTrackById(id);
+
+        this.startTrack(track);
+    }
+
+    startTrack(track) {
+        if (this.audio.src) {
+            this.audio.pause();
+        }
+
+        this.playing = track;
+
+        this.audio.src = track.file;
+
+        this.audio.play();
+        this.audioContext.resume();
     }
 }
 

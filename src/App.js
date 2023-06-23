@@ -10,10 +10,10 @@ export default function App() {
 
   return (
     <div className='relative flex justify-center items-center min-h-screen'>
-      <video className='absolute top-0 left-0 min-h-screen w-screen object-cover'autoPlay muted loop>
+      <video className='fixed top-0 left-0 min-h-screen w-screen object-cover'autoPlay muted loop>
         <source src={bg} type="video/mp4" />
       </video>
-      <div className='relative z-10 px-4 w-full'>
+      <div className='relative z-10 p-4 w-full'>
         <div className='md:flex items-center gap-5 relative w-full border-2 border-slate-700 sm:max-w-screen-sm md:max-w-screen-md text-white p-4 bg-slate-900 rounded-lg shadow-xl mx-auto mb-5'>
           <img className='h-40 w-40 border-2 border-slate-700 rounded-full mb-2 mx-auto md:mx-0 md:mb-0' src={avatar} alt='Aidan Lee Avatar' />
           <div>
