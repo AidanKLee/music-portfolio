@@ -5,12 +5,12 @@ class MusicLibrary {
     genres = Genre;
     playlists = Playlist;
 
-    getTrackById(id) {
-        return this.getTracks().filter(track => track.id === parseInt(id))[0];
-    }
-
     getTracks() {
         return this.tracks.library;
+    }
+
+    getTrackById(id) {
+        return this.getTracks().filter(track => track.id === parseInt(id))[0];
     }
 
     getArtists() {
@@ -21,12 +21,20 @@ class MusicLibrary {
         return this.albums.library;
     }
 
+    getAlbumTracksById(id) {
+        return this.getTracks().filter(track => track.album.id === parseInt(id));
+    }
+
     getGenres() {
         return this.genres.library;
     }
     
     getPlaylists() {
         return this.playlists.library;
+    }
+
+    getPlaylistTracksById(id) {
+        return this.getPlaylists().filter(playlist => playlist.id === parseInt(id))[0].tracks;
     }
 
     sortByTrack(direction) {
@@ -106,8 +114,10 @@ class MusicPlayer {
     library;
     trackList;
     playing;
+    playingWavform;
     audio = new Audio();
     audioContext = new AudioContext();
+    shuffledTrackList = null;
 
     constructor(musicLibrary) {
         if (musicLibrary) {
@@ -115,6 +125,20 @@ class MusicPlayer {
         } else {
             this.library = new MusicLibrary();
         }
+
+        this.addEventListeners();
+    }
+
+    addEventListeners() {
+        window.addEventListener('resize', e => {
+            if (this.timeout) {
+                clearTimeout(this.timeout);
+            }
+
+            this.timeout = setTimeout(() => {
+                new WavForm(this.audioContext, this.playing.file)
+            }, 100)
+        })
     }
 
     initialise() {
@@ -125,8 +149,7 @@ class MusicPlayer {
 
         audioTrack.connect(this.audioContext.destination);
 
-        this.playing = initialTrack;
-        this.audio.src = initialTrack.file;
+        this.selectTrack(initialTrack);
         this.audio.load();
     }
 
@@ -160,20 +183,146 @@ class MusicPlayer {
     playTrackById(id) {
         const track = this.library.getTrackById(id);
 
-        this.startTrack(track);
+        this.selectTrack(track);
+        this.startTrack();
     }
 
-    startTrack(track) {
-        if (this.audio.src) {
+    selectAllTracks() {
+        this.trackList = this.library.getTracks();
+    }
+
+    selectAlbumById(id) {
+        this.trackList = this.library.getAlbumTracksById(id);
+    }
+
+    selectPlaylistById(id) {
+        this.trackList = this.library.getPlaylistTracksById(id);
+    }
+
+    selectTrack(track) {
+        if (this.audio.src && !this.audio.paused) {
             this.audio.pause();
         }
 
         this.playing = track;
-
+        
         this.audio.src = track.file;
+        
+        new WavForm(this.audioContext, this.playing.file);
+    }
 
+    shuffleTrackList() {
+        this.shuffledTrackList = [...this.trackList];
+
+        let currentTrackIndex = this.trackList.findIndex(track => track === this.playing);
+
+        const temp = this.trackList[currentTrackIndex];
+        
+        for (let i = 1; i < this.trackList.length; i++) {
+            const j = Math.floor(Math.random() * this.trackList.length);
+            const temp = this.trackList[i];
+
+            this.trackList[i] = this.trackList[j];
+            this.trackList[j] = temp;
+        }
+
+        currentTrackIndex = this.trackList.findIndex(track => track === this.playing);
+        
+        this.trackList[currentTrackIndex] = this.trackList[0];
+        this.trackList[0] = temp;
+    }
+
+    startTrack() {
         this.audio.play();
         this.audioContext.resume();
+    }
+
+    unshuffleTrackList() {
+        this.trackList = this.shuffledTrackList;
+        this.shuffledTrackList = null;
+    }
+}
+
+class WavForm {
+    audioContext;
+    url;
+
+    constructor(audioContext, trackUrl) {
+        this.audioContext = audioContext;
+        this.url = trackUrl;
+
+        this.generate();
+    }
+
+    draw(normalizedData) {
+        const canvas = document.querySelector("canvas");
+        const ctx = canvas.getContext("2d");
+        const dpr = window.devicePixelRatio || 1;
+        const padding = 24;
+
+        canvas.width = canvas.offsetWidth * dpr;
+        canvas.height = (canvas.offsetHeight + padding * 2) * dpr;
+
+        ctx.scale(dpr, dpr);
+        ctx.translate(0, canvas.offsetHeight / 2 + padding); // Set Y = 0 to be in the middle of the canvas
+
+        // draw the line segments
+        const width = canvas.offsetWidth / normalizedData.length;
+        for (let i = 0; i < normalizedData.length; i++) {
+            const x = width * i;
+            let height = normalizedData[i] * (canvas.offsetHeight - padding);
+
+            this.drawLineSegment(ctx, x, height, width, (i + 1) % 2);
+        }
+    }
+
+    drawLineSegment(ctx, x, y, width, isEven) {
+        ctx.lineWidth = width;
+        ctx.strokeStyle = "#1F2937";
+        ctx.beginPath();
+        
+        if (!isEven) {
+            ctx.moveTo(x, -y);
+            ctx.lineTo(x, y);
+        }
+        
+        ctx.stroke();
+    }
+
+    filterData(audioBuffer) {
+        const rawData = audioBuffer.getChannelData(0);
+        const samples = document.querySelector('canvas').getBoundingClientRect().width / 2;
+        const blockSize = Math.floor(rawData.length / samples);
+        const filteredData = [];
+
+        for (let i = 0; i < samples; i++) {
+            let blockStart = blockSize * i;
+            let sum = 0;
+
+            for (let j = 0; j < blockSize; j++) {
+                sum = sum + Math.abs(rawData[blockStart + j])
+            }
+
+            filteredData.push(sum / blockSize);
+        }
+
+        return filteredData;
+    }
+
+    async generate() {
+        const response = await fetch(this.url);
+        const arrayBuffer = await response.arrayBuffer();
+        const audioBuffer = await this.audioContext.decodeAudioData(arrayBuffer);
+
+        const filteredData = this.filterData(audioBuffer);
+        const normalizedData = this.normalizeData(filteredData);
+
+        this.draw(normalizedData);
+    }
+
+    normalizeData(filteredData) {
+        const multiplier = Math.pow(Math.max(...filteredData), -1);
+        return filteredData.map(n => n * multiplier);
     }
 }
 

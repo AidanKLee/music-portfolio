@@ -4,10 +4,6 @@ import Player from './components/musicPlayer/Player';
 import { useEffect } from 'react';
 
 export default function App() {
-
-  useEffect(() => {
-  }, [])
-
   return (
     <div className='relative flex justify-center items-center min-h-screen'>
       <video className='fixed top-0 left-0 min-h-screen w-screen object-cover'autoPlay muted loop>

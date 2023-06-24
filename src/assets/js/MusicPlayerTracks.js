@@ -30,7 +30,7 @@ import fdctl16 from '../audio/fdctl/16 Cries Of Hope (Bonus).mp3';
 
 const player = new MusicPlayer();
 
-player.library.tracks.add({ 
+const track1 = player.library.tracks.add({ 
     name: 'Cries Of Hope', 
     artist: 'Aidan Lee', 
     album: 'Divine Animosity', 
@@ -41,7 +41,7 @@ player.library.tracks.add({
     number: 1
 });
 
-player.library.tracks.add({ 
+const track2 = player.library.tracks.add({ 
     name: 'Isle Of The Blessed', 
     artist: 'Aidan Lee', 
     album: 'Divine Animosity', 
@@ -52,7 +52,7 @@ player.library.tracks.add({
     number: 2
 });
 
-player.library.tracks.add({ 
+const track3 = player.library.tracks.add({ 
     name: 'Deus Ex Machina', 
     artist: 'Aidan Lee', 
     album: 'Divine Animosity', 
@@ -63,7 +63,7 @@ player.library.tracks.add({
     number: 3
 });
 
-player.library.tracks.add({ 
+const track4 = player.library.tracks.add({ 
     name: 'Divine Animosity Pt. I', 
     artist: 'Aidan Lee', 
     album: 'Divine Animosity', 
@@ -74,7 +74,7 @@ player.library.tracks.add({
     number: 4
 });
 
-player.library.tracks.add({ 
+const track5 = player.library.tracks.add({ 
     name: 'Divine Animosity Pt. II', 
     artist: 'Aidan Lee', 
     album: 'Divine Animosity', 
@@ -85,7 +85,7 @@ player.library.tracks.add({
     number: 5
 });
 
-player.library.tracks.add({ 
+const track6 = player.library.tracks.add({ 
     name: 'We Remember', 
     artist: 'Aidan Lee', 
     album: 'Divine Animosity', 
@@ -96,7 +96,7 @@ player.library.tracks.add({
     number: 6
 });
 
-player.library.tracks.add({ 
+const track7 = player.library.tracks.add({ 
     name: 'Resoluteness Overcome', 
     artist: 'Aidan Lee', 
     album: 'Divine Animosity', 
@@ -107,7 +107,7 @@ player.library.tracks.add({
     number: 7
 });
 
-player.library.tracks.add({ 
+const track8 = player.library.tracks.add({ 
     name: 'Risen From The Ashes', 
     artist: 'Aidan Lee', 
     album: 'Divine Animosity', 
@@ -118,7 +118,7 @@ player.library.tracks.add({
     number: 8
 });
 
-player.library.tracks.add({ 
+const track9 = player.library.tracks.add({ 
     name: 'Calm Before The Storm', 
     artist: 'Aidan Lee', 
     album: 'Divine Animosity', 
@@ -129,7 +129,7 @@ player.library.tracks.add({
     number: 9
 });
 
-player.library.tracks.add({ 
+const track10 = player.library.tracks.add({ 
     name: 'The Miracle', 
     artist: 'Aidan Lee', 
     album: 'Divine Animosity', 
@@ -142,7 +142,7 @@ player.library.tracks.add({
 
 
 
-player.library.tracks.add({ 
+const track11 = player.library.tracks.add({ 
     name: 'Bayer', 
     artist: 'Aidan Lee', 
     album: 'From Darkness Comes The Light', 
@@ -153,7 +153,7 @@ player.library.tracks.add({
     number: 1
 });
 
-player.library.tracks.add({ 
+const track12 = player.library.tracks.add({ 
     name: 'Cyber City', 
     artist: 'Aidan Lee', 
     album: 'From Darkness Comes The Light', 
@@ -164,7 +164,7 @@ player.library.tracks.add({
     number: 2
 });
 
-player.library.tracks.add({ 
+const track13 = player.library.tracks.add({ 
     name: 'Downtown Chase', 
     artist: 'Aidan Lee', 
     album: 'From Darkness Comes The Light', 
@@ -175,7 +175,7 @@ player.library.tracks.add({
     number: 3
 });
 
-player.library.tracks.add({ 
+const track14 = player.library.tracks.add({ 
     name: 'Westworld', 
     artist: 'Aidan Lee', 
     album: 'From Darkness Comes The Light', 
@@ -186,7 +186,7 @@ player.library.tracks.add({
     number: 4
 });
 
-player.library.tracks.add({ 
+const track15 = player.library.tracks.add({ 
     name: 'The Return Of The Warrior', 
     artist: 'Aidan Lee', 
     album: 'From Darkness Comes The Light', 
@@ -197,7 +197,7 @@ player.library.tracks.add({
     number: 5
 });
 
-player.library.tracks.add({ 
+const track16 = player.library.tracks.add({ 
     name: 'New Beginnings', 
     artist: 'Aidan Lee', 
     album: 'From Darkness Comes The Light', 
@@ -208,7 +208,7 @@ player.library.tracks.add({
     number: 6
 });
 
-player.library.tracks.add({ 
+const track17 = player.library.tracks.add({ 
     name: 'Strength and Fortitude', 
     artist: 'Aidan Lee', 
     album: 'From Darkness Comes The Light', 
@@ -219,7 +219,7 @@ player.library.tracks.add({
     number: 7
 });
 
-player.library.tracks.add({ 
+const track18 = player.library.tracks.add({ 
     name: 'Starry Skies', 
     artist: 'Aidan Lee', 
     album: 'From Darkness Comes The Light', 
@@ -230,7 +230,7 @@ player.library.tracks.add({
     number: 8
 });
 
-player.library.tracks.add({ 
+const track19 = player.library.tracks.add({ 
     name: 'The Hero In Us All', 
     artist: 'Aidan Lee', 
     album: 'From Darkness Comes The Light', 
@@ -241,7 +241,7 @@ player.library.tracks.add({
     number: 9
 });
 
-player.library.tracks.add({ 
+const track20 = player.library.tracks.add({ 
     name: 'Escaping Cerberus', 
     artist: 'Aidan Lee', 
     album: 'From Darkness Comes The Light', 
@@ -252,7 +252,7 @@ player.library.tracks.add({
     number: 10
 });
 
-player.library.tracks.add({ 
+const track21 = player.library.tracks.add({ 
     name: 'Tribute To Valor', 
     artist: 'Aidan Lee', 
     album: 'From Darkness Comes The Light', 
@@ -263,7 +263,7 @@ player.library.tracks.add({
     number: 11
 });
 
-player.library.tracks.add({ 
+const track22 = player.library.tracks.add({ 
     name: 'The Warning', 
     artist: 'Aidan Lee', 
     album: 'From Darkness Comes The Light', 
@@ -274,7 +274,7 @@ player.library.tracks.add({
     number: 12
 });
 
-player.library.tracks.add({ 
+const track23 = player.library.tracks.add({ 
     name: 'Skybound', 
     artist: 'Aidan Lee', 
     album: 'From Darkness Comes The Light', 
@@ -285,7 +285,7 @@ player.library.tracks.add({
     number: 13
 });
 
-player.library.tracks.add({ 
+const track24 = player.library.tracks.add({ 
     name: 'War Of The Gods', 
     artist: 'Aidan Lee', 
     album: 'From Darkness Comes The Light', 
@@ -296,7 +296,7 @@ player.library.tracks.add({
     number: 14
 });
 
-player.library.tracks.add({ 
+const track25 = player.library.tracks.add({ 
     name: 'Solar Penumbra (From Darkness Comes The Light)', 
     artist: 'Aidan Lee', 
     album: 'From Darkness Comes The Light', 
@@ -307,7 +307,7 @@ player.library.tracks.add({
     number: 15
 });
 
-player.library.tracks.add({ 
+const track26 = player.library.tracks.add({ 
     name: 'Cries Of Hope (Bonus)', 
     artist: 'Aidan Lee', 
     album: 'From Darkness Comes The Light', 
@@ -317,5 +317,25 @@ player.library.tracks.add({
     artwork: fdctl,
     number: 16
 });
+
+const playlist1 = player.library.playlists.add({
+    name: 'Top Picks',
+    tracks: [track25, track21, track4, track13, track3, track12, track24, track2,  track1, track15]
+})
+
+const playlist2 = player.library.playlists.add({
+    name: 'Uplifting',
+    tracks: [track26, track21, track4, track19, track6, track16, track8, track13, track11]
+})
+
+const playlist3 = player.library.playlists.add({
+    name: 'Hard Hitting',
+    tracks: [track3, track12, track5, track25, track13, track20, track24]
+})
+
+const playlist4 = player.library.playlists.add({
+    name: 'Emotional',
+    tracks: [track4, track23, track1, track25, track16, track2, track9, track17, track21]
+})
 
 export default player;
