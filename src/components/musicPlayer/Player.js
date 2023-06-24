@@ -1,7 +1,6 @@
 import React, { useEffect, useMemo, useState } from "react";
 import player from "../../assets/js/MusicPlayerTracks";
 
-console.log(player.library)
 player.initialise();
 
 export default function Player() {
@@ -139,8 +138,10 @@ export default function Player() {
             setShuffle(true);
             player.shuffleTrackList();
         }
-        
-        setTrackList(player.trackList);
+
+        if (isCurrentTrackList) {
+            setTrackList(player.trackList);
+        }
     }
 
     function handleTrackClick(e) {
@@ -243,8 +244,8 @@ export default function Player() {
                         <div className="absolute top-0 left-0 h-full bg-white opacity-10" style={{ width: `${playerMousePos}px` }}></div>
                         <div className="h-1 bg-gray-600 w-full mt-auto rounded-r-md"></div>
                     </button>
-                    <div className="absolute bottom-2 right-1 flex">
-                        <button onClick={handleRepeatClick}>
+                    <div className="absolute bottom-2 right-1 flex gap-1">
+                        <button onClick={handleRepeatClick} className="p-2 bg-white bg-opacity-10 rounded-full duration-300 hover:bg-opacity-20">
                             {
                                 repeat === 'all' ? (
                                     <svg xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 -960 960 960" width="20" className="text-amber-500" fill="currentColor"><path d="M280-80 120-240l160-160 42 44-86 86h464v-160h60v220H236l86 86-42 44Zm-80-450v-220h524l-86-86 42-44 160 160-160 160-42-44 86-86H260v160h-60Z"/></svg>
@@ -255,10 +256,10 @@ export default function Player() {
                                 )
                             }
                         </button>
-                        <button onClick={handleShuffleClick}>
+                        <button onClick={handleShuffleClick} className="p-2 bg-white bg-opacity-10 rounded-full duration-300 hover:bg-opacity-20">
                             <svg xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 -960 960 960" width="20" className={shuffle ? "text-amber-500" : "text-gray-400"} fill="currentColor"><path d="M581-150v-60h125L522-393l42-43 186 184v-127h60v229H581Zm-389 0-42-43 558-558H581v-60h229v229h-60v-126L192-150Zm203-374L150-768l43-43 245 244-43 43Z"/></svg>
                         </button>
-                        <button onClick={handleMenuClick}>
+                        <button onClick={handleMenuClick} className="p-2 bg-white bg-opacity-10 rounded-full duration-300 hover:bg-opacity-20">
                             <svg xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 -960 960 960" width="20" className={menu ? "text-amber-500" : "text-gray-400"} fill="currentColor"><path d="M120-240v-60h520v60H120Zm678-52L609-481l188-188 43 43-145 145 146 146-43 43ZM120-452v-60h400v60H120Zm0-208v-60h520v60H120Z"/></svg>
                         </button>
                     </div>
